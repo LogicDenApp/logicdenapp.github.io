@@ -170,11 +170,11 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
    img: thumbnail in /images (optional – a letter tile shows if missing), tag: short description,
    featured: true = shows on the home page (first 5 featured). Every game shows in "All Games". */
 const GAMES = [
-  {name:"Minecraft 1.8", path:"games/eaglercraft/index.html", img:"images/minecraft.png", tag:"Build and survive", featured:true},
-  {name:"Jetpack Joyride", path:"games/jetpack-joyride/index.html", img:"images/jetpack-joyride.png", tag:"Fly, dodge, collect", featured:true},
-  {name:"Soundboard", path:"games/soundboard/index.html", img:"images/soundboard.png", tag:"Tap to play sounds", featured:true},
-  {name:"Game Four", path:"games/game-four/index.html", img:"images/game-four.png", tag:"Placeholder, replace me", featured:true},
-  {name:"Game Five", path:"games/game-five/index.html", img:"images/game-five.png", tag:"Placeholder, replace me", featured:true}
+  {name:"Soccer Random", path:"games/game1/index.html", img:"images/game1.png", tag:"Play Game 1", featured:true},
+  {name:"Basket Random", path:"games/game2/index.html", img:"images/game2.png", tag:"Play Game 2", featured:true},
+  {name:"Volley Random", path:"games/game3/index.html", img:"images/game3.png", tag:"Play Game 3", featured:true},
+  {name:"Survival Race", path:"games/game4/index.html", img:"images/game4.png", tag:"Play Game 4", featured:true},
+  {name:"Drive Mad", path:"games/game5/index.html", img:"images/game5.png", tag:"Play Game 5", featured:true}
 ];
 function drawGames(grid,list){
   grid.innerHTML=list.length?'':'<p class="empty">No games match that search.</p>';
