@@ -108,10 +108,10 @@ body.lib #calculator,body.lib #tools,body.lib #games{display:none}
 #player{display:none;position:fixed;inset:0;z-index:99;background:var(--bg);flex-direction:column}
 body.playing #player{display:flex}
 body.playing main, body.playing footer{display:none}
-.player-bar{height:56px;padding:0 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-space-between;background:#fff}
+.player-bar{height:56px;padding:0 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:#fff}
 .player-title{font:700 18px var(--head)}
 .player-actions{display:flex;gap:10px;align-items:center}
-#game-frame{width:100%;height:calc(100vh - 56px);border:0;background:#000}
+#game-frame{width:100%;height:calc(100vh - 56px);border:0;background:#141821}
 
 footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
@@ -194,21 +194,57 @@ const GAMES = [
   {name:"Drive Mad", path:"games/game5/index.html", img:"", tag:"Play Game 5", featured:true}
 ];
 
+const frame = document.getElementById('game-frame');
+
+// Clean GeckoGames UI elements from inside the iframe automatically
+frame.addEventListener('load', () => {
+  try {
+    const doc = frame.contentDocument || frame.contentWindow.document;
+    if (!doc) return;
+    
+    // Inject a small stylesheet directly into the game iframe to hide headers, footers, ads, and gecko logos
+    const style = doc.createElement('style');
+    style.innerHTML = `
+      header, footer, nav, .ad, .ads, .banner, .back-to-games, 
+      [class*="gecko"], [id*="gecko"], [class*="header"], [class*="nav"],
+      a[href*="geckogames"], a[href*="github.io"] {
+        display: none !important;
+      }
+      body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #141821 !important;
+        overflow: hidden !important;
+      }
+      canvas, #canvas, #game, #gameContainer, iframe {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        margin: 0 !important;
+      }
+    `;
+    doc.head.appendChild(style);
+  } catch (e) {
+    // Cross-origin fallback
+  }
+});
+
 function launchGame(game){
   document.getElementById('p-title').textContent = game.name;
-  document.getElementById('game-frame').src = game.path;
+  frame.src = game.path;
   document.body.classList.add('playing');
 }
 
 function closeGame(){
   document.body.classList.remove('playing');
-  document.getElementById('game-frame').src = 'about:blank';
+  frame.src = 'about:blank';
 }
 
 document.getElementById('p-close').onclick = closeGame;
 document.getElementById('p-fullscreen').onclick = ()=>{
-  const f = document.getElementById('game-frame');
-  if(f.requestFullscreen) f.requestFullscreen();
+  if(frame.requestFullscreen) frame.requestFullscreen();
 };
 
 function drawGames(grid,list){
