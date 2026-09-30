@@ -90,7 +90,7 @@ input:focus,select:focus{outline:2px solid var(--accent);border-color:transparen
 #games{background:var(--panel);border-top:1px solid var(--line)}
 .search{max-width:280px;margin:0}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
-.game{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:border-color .15s,transform .15s;cursor:pointer}
+.game{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:border-color .15s,transform .15s;display:block}
 .game:hover{border-color:var(--ink);transform:translateY(-3px)}
 .thumb{aspect-ratio:16/10;background:var(--accent-soft);display:grid;place-items:center;font:800 40px var(--head);color:var(--accent)}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
@@ -101,17 +101,8 @@ input:focus,select:focus{outline:2px solid var(--accent);border-color:transparen
 #library{display:none;min-height:70vh;background:var(--panel)}
 body.lib #library{display:block}
 body.lib #calculator,body.lib #tools,body.lib #games{display:none}
-.back{display:inline-block;margin-bottom:14px;font-weight:600;color:var(--muted);cursor:pointer}
+.back{display:inline-block;margin-bottom:14px;font-weight:600;color:var(--muted)}
 .back:hover{color:var(--ink)}
-
-/* modal player */
-#player{display:none;position:fixed;inset:0;z-index:99;background:var(--bg);flex-direction:column}
-body.playing #player{display:flex}
-body.playing main, body.playing footer{display:none}
-.player-bar{height:56px;padding:0 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:#fff}
-.player-title{font:700 18px var(--head)}
-.player-actions{display:flex;gap:10px;align-items:center}
-#game-frame{width:100%;height:calc(100vh - 56px);border:0;background:#141821}
 
 footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
@@ -171,17 +162,6 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 </div></section>
 </main>
 
-<div id="player">
-  <div class="player-bar">
-    <div class="player-title" id="p-title">Game Title</div>
-    <div class="player-actions">
-      <button class="btn" id="p-fullscreen">Fullscreen</button>
-      <button class="btn primary" id="p-close">Close Game</button>
-    </div>
-  </div>
-  <iframe id="game-frame" src="about:blank"></iframe>
-</div>
-
 <footer><div class="wrap"><span>LogicDen</span><span>Free calculators and math tools <button class="btn" id="cloak" style="padding:4px 12px;margin-left:12px;font-size:13px">Disguise tab</button></span></div></footer>
 
 <script>
@@ -194,64 +174,10 @@ const GAMES = [
   {name:"Drive Mad", path:"games/game5/index.html", img:"", tag:"Play Game 5", featured:true}
 ];
 
-const frame = document.getElementById('game-frame');
-
-// Clean GeckoGames UI elements from inside the iframe automatically
-frame.addEventListener('load', () => {
-  try {
-    const doc = frame.contentDocument || frame.contentWindow.document;
-    if (!doc) return;
-    
-    // Inject a small stylesheet directly into the game iframe to hide headers, footers, ads, and gecko logos
-    const style = doc.createElement('style');
-    style.innerHTML = `
-      header, footer, nav, .ad, .ads, .banner, .back-to-games, 
-      [class*="gecko"], [id*="gecko"], [class*="header"], [class*="nav"],
-      a[href*="geckogames"], a[href*="github.io"] {
-        display: none !important;
-      }
-      body {
-        margin: 0 !important;
-        padding: 0 !important;
-        background: #141821 !important;
-        overflow: hidden !important;
-      }
-      canvas, #canvas, #game, #gameContainer, iframe {
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        margin: 0 !important;
-      }
-    `;
-    doc.head.appendChild(style);
-  } catch (e) {
-    // Cross-origin fallback
-  }
-});
-
-function launchGame(game){
-  document.getElementById('p-title').textContent = game.name;
-  frame.src = game.path;
-  document.body.classList.add('playing');
-}
-
-function closeGame(){
-  document.body.classList.remove('playing');
-  frame.src = 'about:blank';
-}
-
-document.getElementById('p-close').onclick = closeGame;
-document.getElementById('p-fullscreen').onclick = ()=>{
-  if(frame.requestFullscreen) frame.requestFullscreen();
-};
-
 function drawGames(grid,list){
   grid.innerHTML=list.length?'':'<p class="empty">No games match that search.</p>';
   list.forEach(g=>{
-    const a=document.createElement('div');a.className='game';
-    a.onclick = ()=>launchGame(g);
+    const a=document.createElement('a');a.className='game';a.href=g.path;
     const t=document.createElement('div');t.className='thumb';
     const fallback=()=>{t.textContent=g.name[0]};
     if(g.img){const i=new Image();i.alt='';i.loading='lazy';i.onerror=()=>{t.innerHTML='';fallback()};i.src=g.img;t.appendChild(i)}else fallback();
