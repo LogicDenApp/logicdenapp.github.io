@@ -90,7 +90,7 @@ input:focus,select:focus{outline:2px solid var(--accent);border-color:transparen
 #games{background:var(--panel);border-top:1px solid var(--line)}
 .search{max-width:280px;margin:0}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
-.game{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:border-color .15s,transform .15s}
+.game{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:border-color .15s,transform .15s;cursor:pointer}
 .game:hover{border-color:var(--ink);transform:translateY(-3px)}
 .thumb{aspect-ratio:16/10;background:var(--accent-soft);display:grid;place-items:center;font:800 40px var(--head);color:var(--accent)}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
@@ -101,8 +101,17 @@ input:focus,select:focus{outline:2px solid var(--accent);border-color:transparen
 #library{display:none;min-height:70vh;background:var(--panel)}
 body.lib #library{display:block}
 body.lib #calculator,body.lib #tools,body.lib #games{display:none}
-.back{display:inline-block;margin-bottom:14px;font-weight:600;color:var(--muted)}
+.back{display:inline-block;margin-bottom:14px;font-weight:600;color:var(--muted);cursor:pointer}
 .back:hover{color:var(--ink)}
+
+/* modal player */
+#player{display:none;position:fixed;inset:0;z-index:99;background:var(--bg);flex-direction:column}
+body.playing #player{display:flex}
+body.playing main, body.playing footer{display:none}
+.player-bar{height:56px;padding:0 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-space-between;background:#fff}
+.player-title{font:700 18px var(--head)}
+.player-actions{display:flex;gap:10px;align-items:center}
+#game-frame{width:100%;height:calc(100vh - 56px);border:0;background:#000}
 
 footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
@@ -162,24 +171,51 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 </div></section>
 </main>
 
+<div id="player">
+  <div class="player-bar">
+    <div class="player-title" id="p-title">Game Title</div>
+    <div class="player-actions">
+      <button class="btn" id="p-fullscreen">Fullscreen</button>
+      <button class="btn primary" id="p-close">Close Game</button>
+    </div>
+  </div>
+  <iframe id="game-frame" src="about:blank"></iframe>
+</div>
+
 <footer><div class="wrap"><span>LogicDen</span><span>Free calculators and math tools <button class="btn" id="cloak" style="padding:4px 12px;margin-left:12px;font-size:13px">Disguise tab</button></span></div></footer>
 
 <script>
-/* ---------- GAMES: edit this list ----------
-   name: display name, path: folder/index.html of the game,
-   img: thumbnail in /images (optional – a letter tile shows if missing), tag: short description,
-   featured: true = shows on the home page (first 5 featured). Every game shows in "All Games". */
+/* ---------- GAMES LIST ---------- */
 const GAMES = [
-  {name:"Soccer Random", path:"games/game1/index.html", img:"images/game1.png", tag:"Play Game 1", featured:true},
-  {name:"Basket Random", path:"games/game2/index.html", img:"images/game2.png", tag:"Play Game 2", featured:true},
-  {name:"Volley Random", path:"games/game3/index.html", img:"images/game3.png", tag:"Play Game 3", featured:true},
-  {name:"Survival Race", path:"games/game4/index.html", img:"images/game4.png", tag:"Play Game 4", featured:true},
-  {name:"Drive Mad", path:"games/game5/index.html", img:"images/game5.png", tag:"Play Game 5", featured:true}
+  {name:"Soccer Random", path:"games/game1/index.html", img:"", tag:"Play Game 1", featured:true},
+  {name:"Basket Random", path:"games/game2/index.html", img:"", tag:"Play Game 2", featured:true},
+  {name:"Volley Random", path:"games/game3/index.html", img:"", tag:"Play Game 3", featured:true},
+  {name:"Survival Race", path:"games/game4/index.html", img:"", tag:"Play Game 4", featured:true},
+  {name:"Drive Mad", path:"games/game5/index.html", img:"", tag:"Play Game 5", featured:true}
 ];
+
+function launchGame(game){
+  document.getElementById('p-title').textContent = game.name;
+  document.getElementById('game-frame').src = game.path;
+  document.body.classList.add('playing');
+}
+
+function closeGame(){
+  document.body.classList.remove('playing');
+  document.getElementById('game-frame').src = 'about:blank';
+}
+
+document.getElementById('p-close').onclick = closeGame;
+document.getElementById('p-fullscreen').onclick = ()=>{
+  const f = document.getElementById('game-frame');
+  if(f.requestFullscreen) f.requestFullscreen();
+};
+
 function drawGames(grid,list){
   grid.innerHTML=list.length?'':'<p class="empty">No games match that search.</p>';
   list.forEach(g=>{
-    const a=document.createElement('a');a.className='game';a.href=g.path;
+    const a=document.createElement('div');a.className='game';
+    a.onclick = ()=>launchGame(g);
     const t=document.createElement('div');t.className='thumb';
     const fallback=()=>{t.textContent=g.name[0]};
     if(g.img){const i=new Image();i.alt='';i.loading='lazy';i.onerror=()=>{t.innerHTML='';fallback()};i.src=g.img;t.appendChild(i)}else fallback();
@@ -188,6 +224,7 @@ function drawGames(grid,list){
     grid.appendChild(a);
   });
 }
+
 const byName=q=>GAMES.filter(g=>g.name.toLowerCase().includes(q.toLowerCase())).sort((a,b)=>a.name.localeCompare(b.name));
 drawGames(document.getElementById('grid'),GAMES.filter(g=>g.featured).slice(0,5));
 drawGames(document.getElementById('lgrid'),byName(''));
@@ -267,15 +304,15 @@ const TOOLS={
  'Quadratic solver':{html:`<div class="row"><div class="card"><h3>ax² + bx + c = 0</h3><label for="qa">a</label><input id="qa" type="number" value="1"><label for="qb">b</label><input id="qb" type="number" value="-3"><label for="qc">c</label><input id="qc" type="number" value="2"></div>
    <div class="card"><h3>Solutions</h3><div class="out" id="qo">—</div></div></div>`,
   run(){const a=num('qa'),b=num('qb'),c=num('qc'),o=$('qo');if(![a,b,c].every(Number.isFinite)||a===0){o.innerHTML='Enter a value for a that is not 0';return}
-   const d=b*b-4*a*c;if(d>=0){const s=Math.sqrt(d);o.innerHTML=`x = ${g((-b+s)/(2*a))}, ${g((-b-s)/(2*a))}<small>Discriminant ${g(d)}</small>`}
-   else{const re=g(-b/(2*a)),im=g(Math.sqrt(-d)/(2*a));o.innerHTML=`x = ${re} ± ${im}i<small>Two complex roots</small>`}}},
+   const d=b*b-4*a*c;if(d>=0){const s=Math.sqrt(d);o.innerHTML=`x = ${g((-b+s)/(2*a))}, ${g((-b-s)/(2*a))}<small>Discriminant${g(d)}</small>`}
+   else{const re=g(-b/(2*a)),im=g(Math.sqrt(-d)/(2*a));o.innerHTML=`x = ${re} ±${im}i<small>Two complex roots</small>`}}},
  'Statistics':{html:`<div class="row"><div class="card"><label for="sd">Numbers, separated by commas or spaces</label><input id="sd" value="4, 8, 15, 16, 23, 42"></div>
    <div class="card"><h3>Summary</h3><div class="out" id="so">—</div></div></div>`,
   run(){const d=$('sd').value.split(/[\s,]+/).filter(Boolean).map(Number);if(!d.length||d.some(isNaN)){$('so').textContent='—';return}
    const n=d.length,s=[...d].sort((x,y)=>x-y),m=d.reduce((p,c)=>p+c,0)/n,med=n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2,
    sd=Math.sqrt(d.reduce((p,c)=>p+(c-m)**2,0)/n),cnt={};d.forEach(x=>cnt[x]=(cnt[x]||0)+1);const mx=Math.max(...Object.values(cnt));
    const mode=mx===1?'none':Object.keys(cnt).filter(k=>cnt[k]===mx).join(', ');
-   $('so').innerHTML=`Mean ${g(m)}<small>Median ${g(med)} · Mode ${mode} · Range ${g(s[n-1]-s[0])} · Std dev ${g(sd)} · Count ${n}</small>`}},
+   $('so').innerHTML=`Mean ${g(m)}<small>Median${g(med)} · Mode ${mode} · Range ${g(s[n-1]-s[0])} · Std dev ${g(sd)} · Count ${n}</small>`}},
  'Grade planner':{html:`<div class="row"><div class="card"><label for="ga">Current grade (%)</label><input id="ga" type="number" value="88"><label for="gb">Final exam weight (%)</label><input id="gb" type="number" value="20"><label for="gc">Grade you want (%)</label><input id="gc" type="number" value="90"></div>
    <div class="card"><h3>You need on the final</h3><div class="out" id="go">—</div></div></div>`,
   run(){const a=num('ga'),w=num('gb')/100,t=num('gc'),n=(t-a*(1-w))/w;$('go').innerHTML=Number.isFinite(n)&&w>0?g(n,1)+'%'+`<small>${n>100?'Above 100%, so this target needs extra credit':n<0?'You already have this grade locked in':'to finish with '+g(t,1)+'% overall'}</small>`:'—'}}
@@ -291,7 +328,7 @@ function show(k){
 show('Percentages');
 
 /* ---------- QUICK HIDE ---------- */
-const HIDE_KEY='`';                         // press this key to leave instantly
+const HIDE_KEY='`';                     // press this key to leave instantly
 const HIDE_URL='https://classroom.google.com'; // where it sends you
 const CLOAK_TITLE='Classes';                // tab name when disguised
 document.addEventListener('keydown',e=>{
@@ -313,7 +350,7 @@ $('cloak').onclick=()=>{
   $('cloak').textContent=cloaked?'Restore tab':'Disguise tab';
 };
 
-/* ---------- PAGE SWITCHING (home <-> all games) ---------- */
+/* ---------- PAGE SWITCHING ---------- */
 function route(){
   const h=location.hash,lib=h==='#all-games';
   document.body.classList.toggle('lib',lib);
