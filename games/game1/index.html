@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DG1T71NNRN"></script>
   <script>
@@ -11,131 +12,249 @@
     gtag('js', new Date());
     gtag('config', 'G-DG1T71NNRN');
   </script>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DG1T71NNRN"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-DG1T71NNRN');
-</script>
-  <title>Soccer Random — GeckoGames</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <title>Soccer Random – LogicDen</title>
   <style>
-    :root { --bg:#0a0a0f; --surface:#12121a; --card:#1a1a26; --accent:#f0e040; --accent2:#ff3c6e; --accent3:#3cf0c8; --text:#e8e8f0; --border:#2a2a3a; }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:var(--bg); color:var(--text); font-family:'Space Mono',monospace; min-height:100vh; }
-    header { border-bottom:2px solid var(--accent); padding:0 2rem; display:flex; align-items:center; justify-content:space-between; height:70px; background:var(--bg); }
-    .logo { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:4px; color:var(--accent); text-decoration:none; text-shadow:0 0 20px rgba(240,224,64,0.5); }
-    .logo span { color:var(--accent2); }
-    .back-btn { color:#8888aa; text-decoration:none; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; transition:color 0.2s; }
-    .back-btn:hover { color:var(--accent); }
-    .ad-banner { background:var(--surface); border-bottom:1px solid var(--border); padding:0.6rem 2rem; text-align:center; }
-    .ad-placeholder { background:var(--surface); border:1px dashed var(--border); border-radius:4px; display:flex; align-items:center; justify-content:center; color:#444466; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; }
-    .game-page { max-width:1100px; margin:0 auto; padding:2rem; display:grid; grid-template-columns:1fr 160px; gap:2rem; }
-    @media(max-width:768px){.game-page{grid-template-columns:1fr;}.sidebar{display:none;}}
-    .game-header { margin-bottom:1rem; }
-    .game-tag { font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--accent3); margin-bottom:0.4rem; }
-    .game-title { font-family:'Bebas Neue',sans-serif; font-size:2.5rem; letter-spacing:4px; color:var(--text); }
-    .game-frame-wrapper { width:100%; aspect-ratio:16/9; background:#000; border:2px solid var(--border); border-radius:4px; overflow:hidden; }
-    .game-frame-wrapper iframe { width:100%; height:100%; border:none; display:block; }
-    .fullscreen-btn { display:block; width:100%; margin-top:0.6rem; background:var(--card); border:1px solid var(--border); color:var(--text); font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; padding:0.6rem; cursor:pointer; transition:all 0.2s; border-radius:2px; text-align:center; }
-    .fullscreen-btn:hover { background:var(--accent); color:var(--bg); border-color:var(--accent); }
-    .mid-ad { margin:1.5rem 0; text-align:center; }
-    .game-desc-section { margin-top:1.5rem; }
-    .game-desc-section h2 { font-family:'Bebas Neue',sans-serif; font-size:1.2rem; letter-spacing:3px; color:var(--accent); margin-bottom:0.8rem; }
-    .game-desc-section p { font-size:0.7rem; color:#8888aa; line-height:1.8; }
-    .controls { margin-top:1rem; background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:1rem; }
-    .controls h3 { font-size:0.65rem; letter-spacing:3px; text-transform:uppercase; color:var(--accent3); margin-bottom:0.8rem; }
-    .control-row { display:flex; gap:0.5rem; align-items:center; margin-bottom:0.4rem; font-size:0.65rem; color:#8888aa; }
-    .key { background:var(--card); border:1px solid var(--border); padding:0.2rem 0.5rem; border-radius:3px; font-size:0.65rem; color:var(--text); min-width:32px; text-align:center; }
-    .sidebar { display:flex; flex-direction:column; gap:1rem; padding-top:4rem; }
-    footer { border-top:1px solid var(--border); padding:2rem; text-align:center; font-size:0.65rem; color:#444466; letter-spacing:2px; }
-    footer a { color:#666688; text-decoration:none; }
-    footer a:hover { color:var(--accent); }
+    :root {
+      --bg: #f5f7f9;
+      --surface: #ffffff;
+      --line: #e5e9ee;
+      --ink: #0f172a;
+      --muted: #5b6573;
+      --teal: #0f766e;
+      --teal-tint: #e1f2ee;
+      --radius: 20px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      font-family: Inter, "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 8px; }
+    .wrap { width: 100%; max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    .site-header { background: var(--surface); border-bottom: 1px solid var(--line); }
+    .site-header .wrap { display: flex; align-items: center; justify-content: space-between; height: 84px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+    .brand-mark {
+      width: 40px; height: 40px; border-radius: 10px; background: var(--ink); color: #fff;
+      display: grid; place-items: center; font-size: 22px; font-weight: 800;
+    }
+    .nav { display: flex; gap: 36px; font-size: 18px; color: var(--muted); }
+    .nav a:hover, .nav a[aria-current="page"] { color: var(--ink); }
+
+    /* Ads */
+    .ad-top { display: flex; justify-content: center; padding: 16px 24px; min-height: 122px; }
+    .ad-box { display: flex; justify-content: center; align-items: center; }
+    .ad-mid { margin: 24px 0 8px; min-height: 250px; }
+
+    /* Layout */
+    main { flex: 1; padding: 8px 0 72px; }
+    .game-page { display: grid; grid-template-columns: minmax(0, 1fr) 160px; gap: 32px; align-items: start; }
+    .top-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
+    .back { display: inline-block; font-size: 16px; color: var(--muted); margin-bottom: 14px; }
+    .back:hover { color: var(--ink); }
+    h1 { margin: 0; font-size: clamp(34px, 5vw, 52px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 800; }
+    .sub { margin: 12px 0 0; font-size: 19px; color: var(--muted); }
+
+    .btn {
+      font: inherit; font-size: 17px; font-weight: 600; cursor: pointer;
+      border-radius: 14px; border: 1px solid transparent; padding: 14px 24px;
+      transition: background-color .15s, border-color .15s;
+    }
+    .btn-dark { background: var(--ink); color: #fff; }
+    .btn-dark:hover { background: #1e293b; }
+    .btn-light { background: var(--surface); color: var(--ink); border-color: var(--line); padding: 10px 18px; font-size: 15px; font-weight: 500; }
+    .btn-light:hover { border-color: #c9d1da; }
+
+    /* Game */
+    .game-frame-wrapper {
+      width: 100%; aspect-ratio: 16 / 9; background: #000;
+      border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+    }
+    .game-frame-wrapper iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .player-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 16px; }
+    .player-bar span { color: var(--muted); font-size: 15px; }
+
+    /* Info cards */
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 28px; margin-top: 24px; }
+    .card h2 { margin: 0 0 10px; font-size: 22px; letter-spacing: -0.02em; }
+    .card p { margin: 0; color: var(--muted); font-size: 17px; line-height: 1.6; max-width: 70ch; }
+    .control-row { display: flex; align-items: center; gap: 12px; margin-top: 12px; color: var(--muted); font-size: 16px; }
+    .key {
+      background: var(--teal-tint); color: var(--teal); font-weight: 700;
+      min-width: 38px; text-align: center; padding: 6px 10px; border-radius: 10px;
+    }
+
+    .sidebar { padding-top: 4px; }
+
+    /* Footer */
+    .site-footer { background: var(--surface); border-top: 1px solid var(--line); }
+    .site-footer .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 130px; flex-wrap: wrap; color: var(--muted); }
+    .foot-right { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .foot-right a:hover { color: var(--ink); }
+
+    @media (max-width: 900px) {
+      .game-page { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+    }
+    @media (max-width: 720px) {
+      .nav { gap: 20px; font-size: 16px; }
+      .brand { font-size: 24px; }
+      .site-header .wrap { height: 72px; }
+    }
   </style>
 </head>
 <body>
-  <div class="ad-banner">
-    <div class="ad-placeholder" style="height:90px;max-width:728px;margin:0 auto;"><script>
-  atOptions = {
-    'key' : '5035358a8bd65375379bbb9f7227994d',
-    'format' : 'iframe',
-    'height' : 90,
-    'width' : 728,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/5035358a8bd65375379bbb9f7227994d/invoke.js"></script></div>
-  </div>
-  <header>
-    <a class="logo" href="../../index.html">GECKO<span>GAMES</span></a>
-    <a class="back-btn" href="../../index.html">← Back to Games</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../../index.html"><span class="brand-mark">L</span> LogicDen</a>
+      <nav class="nav" aria-label="Main">
+        <a href="../../index.html#calculator">Calculator</a>
+        <a href="../../index.html#tools">Tools</a>
+        <a href="../../index.html#games" aria-current="page">Games</a>
+      </nav>
+    </div>
   </header>
-  <div class="game-page">
-    <div>
-      <div class="game-header">
-        <div class="game-tag">Sports</div>
-        <div class="game-title">SOCCER RANDOM</div>
-      </div>
-      <div class="game-frame-wrapper">
-        <iframe id="gameFrame"
-        src="/g/soccer-random/"
-        allowfullscreen
-        title="Soccer Random"
-        sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-orientation-lock">
-</iframe>
-      </div>
-      <button class="fullscreen-btn" onclick="goFullscreen()">⛶ FULLSCREEN</button>
-      <div class="mid-ad">
-        <div class="ad-placeholder" style="height:280px;max-width:336px;margin:0 auto;"><script>
-  atOptions = {
-    'key' : '7ebcb4192165b35f1dd46c154cffc595',
-    'format' : 'iframe',
-    'height' : 250,
-    'width' : 300,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/7ebcb4192165b35f1dd46c154cffc595/invoke.js"></script>
-</div>
-      </div>
-      <div class="game-desc-section">
-        <h2>ABOUT THIS GAME</h2>
-        <p>Crazy physics-based soccer! Every match is different — random fields, random weather, random everything. Score 5 goals to win!</p>
-        <div class="controls">
-          <h3>Controls</h3>
+
+  <!-- Top banner ad -->
+  <div class="ad-top">
+    <div class="ad-box" style="width:728px;max-width:100%;height:90px;">
+      <script>
+        atOptions = {
+          'key' : '5035358a8bd65375379bbb9f7227994d',
+          'format' : 'iframe',
+          'height' : 90,
+          'width' : 728,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highperformanceformat.com/5035358a8bd65375379bbb9f7227994d/invoke.js"></script>
+    </div>
+  </div>
+
+  <main>
+    <div class="wrap game-page">
+      <div>
+        <div class="top-row">
+          <div>
+            <a class="back" href="../../index.html#games">&larr; Back to games</a>
+            <h1>Soccer Random</h1>
+            <p class="sub">Sports &middot; Runs right in your browser.</p>
+          </div>
+          <a class="btn btn-dark" href="../../index.html#games">All Games</a>
+        </div>
+
+        <div class="game-frame-wrapper">
+          <iframe id="gameFrame"
+            src="/g/soccer-random/"
+            allowfullscreen
+            title="Soccer Random"
+            sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-orientation-lock">
+          </iframe>
+        </div>
+
+        <div class="player-bar">
+          <span>Click inside the game first so the keyboard works.</span>
+          <button class="btn btn-light" onclick="goFullscreen()">Fullscreen</button>
+        </div>
+
+        <!-- Mid ad -->
+        <div class="ad-box ad-mid">
+          <script>
+            atOptions = {
+              'key' : '7ebcb4192165b35f1dd46c154cffc595',
+              'format' : 'iframe',
+              'height' : 250,
+              'width' : 300,
+              'params' : {}
+            };
+          </script>
+          <script src="https://www.highperformanceformat.com/7ebcb4192165b35f1dd46c154cffc595/invoke.js"></script>
+        </div>
+
+        <div class="card">
+          <h2>About this game</h2>
+          <p>Crazy physics-based soccer! Every match is different — random fields, random weather, random everything. Score 5 goals to win!</p>
+        </div>
+
+        <div class="card">
+          <h2>Controls</h2>
           <div class="control-row"><span class="key">W</span> Jump / Kick — Player 1</div>
-          <div class="control-row"><span class="key">↑</span> Jump / Kick — Player 2</div>
+          <div class="control-row"><span class="key">&uarr;</span> Jump / Kick — Player 2</div>
         </div>
       </div>
-    </div>
-    <div class="sidebar">
-      <div class="ad-placeholder" style="width:160px;height:600px;"><script>
-  atOptions = {
-    'key' : 'feb800c53eb22be3eb56b84f3d25d762',
-    'format' : 'iframe',
-    'height' : 600,
-    'width' : 160,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/feb800c53eb22be3eb56b84f3d25d762/invoke.js"></script>
 
-</div>
+      <!-- Sidebar ad -->
+      <aside class="sidebar">
+        <div class="ad-box" style="width:160px;height:600px;">
+          <script>
+            atOptions = {
+              'key' : 'feb800c53eb22be3eb56b84f3d25d762',
+              'format' : 'iframe',
+              'height' : 600,
+              'width' : 160,
+              'params' : {}
+            };
+          </script>
+          <script src="https://www.highperformanceformat.com/feb800c53eb22be3eb56b84f3d25d762/invoke.js"></script>
+        </div>
+      </aside>
     </div>
-  </div>
-  <footer>
-    <p>© 2025 GECKOGAMES &nbsp;·&nbsp; <a href="/GeckoGames/privacy-policy/">Privacy Policy</a> &nbsp;·&nbsp; <a href="/contact/">Contact</a></p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>&copy; 2026 LogicDen</span>
+      <div class="foot-right">
+        <a href="/GeckoGames/privacy-policy/">Privacy Policy</a>
+        <a href="/contact/">Contact</a>
+        <button class="btn btn-light" id="disguise">Disguise tab</button>
+      </div>
+    </div>
   </footer>
+
   <script>
     function goFullscreen() {
       const frame = document.getElementById('gameFrame');
       if (frame.requestFullscreen) frame.requestFullscreen();
       else if (frame.webkitRequestFullscreen) frame.webkitRequestFullscreen();
     }
+
+    /* Disguise tab: swaps the tab title and icon. Click again to restore. */
+    const realTitle = document.title;
+    let icon = document.querySelector("link[rel~='icon']");
+    if (!icon) {
+      icon = document.createElement("link");
+      icon.rel = "icon";
+      document.head.appendChild(icon);
+    }
+    const realIcon = icon.href;
+    const fakeIcon = "data:image/svg+xml," + encodeURIComponent(
+      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='#4285f4'/><rect x='8' y='7' width='16' height='18' rx='2' fill='white'/></svg>"
+    );
+    let disguised = false;
+    document.getElementById("disguise").addEventListener("click", function () {
+      disguised = !disguised;
+      document.title = disguised ? "Untitled document - Google Docs" : realTitle;
+      icon.href = disguised ? fakeIcon : realIcon;
+    });
+
+    /* Quick hide: press ` (backtick) to jump back to the home page. */
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "`") window.location.replace("../../index.html");
+    });
   </script>
-<script src="https://pl30178962.effectivecpmnetwork.com/49/b9/ab/49b9abad5358c398fa2e5da9995bc443.js"></script>
+
+  <script src="https://pl30178962.effectivecpmnetwork.com/49/b9/ab/49b9abad5358c398fa2e5da9995bc443.js"></script>
 </body>
 </html>
