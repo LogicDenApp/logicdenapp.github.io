@@ -2,6 +2,261 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DG1T71NNRN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DG1T71NNRN');
+  </script>
+
+  <title>CHANGE THIS TO GAME NAME – LogicDen</title>
+  <style>
+    :root {
+      --bg: #f5f7f9;
+      --surface: #ffffff;
+      --line: #e5e9ee;
+      --ink: #0f172a;
+      --muted: #5b6573;
+      --teal: #0f766e;
+      --teal-tint: #e1f2ee;
+      --radius: 20px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      font-family: Inter, "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    :focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; border-radius: 8px; }
+    .wrap { width: 100%; max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    .site-header { background: var(--surface); border-bottom: 1px solid var(--line); }
+    .site-header .wrap { display: flex; align-items: center; justify-content: space-between; height: 84px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+    .brand-mark {
+      width: 40px; height: 40px; border-radius: 10px; background: var(--ink); color: #fff;
+      display: grid; place-items: center; font-size: 22px; font-weight: 800;
+    }
+    .nav { display: flex; gap: 36px; font-size: 18px; color: var(--muted); }
+    .nav a:hover, .nav a[aria-current="page"] { color: var(--ink); }
+
+    /* Ads */
+    .ad-top { display: flex; justify-content: center; padding: 16px 24px; min-height: 122px; }
+    .ad-box { display: flex; justify-content: center; align-items: center; }
+    .ad-mid { margin: 24px 0 8px; min-height: 250px; }
+
+    /* Layout */
+    main { flex: 1; padding: 8px 0 72px; }
+    .game-page { display: grid; grid-template-columns: minmax(0, 1fr) 160px; gap: 32px; align-items: start; }
+    .top-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
+    .back { display: inline-block; font-size: 16px; color: var(--muted); margin-bottom: 14px; }
+    .back:hover { color: var(--ink); }
+    h1 { margin: 0; font-size: clamp(34px, 5vw, 52px); line-height: 1.05; letter-spacing: -0.03em; font-weight: 800; }
+    .sub { margin: 12px 0 0; font-size: 19px; color: var(--muted); }
+
+    .btn {
+      font: inherit; font-size: 17px; font-weight: 600; cursor: pointer;
+      border-radius: 14px; border: 1px solid transparent; padding: 14px 24px;
+      transition: background-color .15s, border-color .15s;
+    }
+    .btn-dark { background: var(--ink); color: #fff; }
+    .btn-dark:hover { background: #1e293b; }
+    .btn-light { background: var(--surface); color: var(--ink); border-color: var(--line); padding: 10px 18px; font-size: 15px; font-weight: 500; }
+    .btn-light:hover { border-color: #c9d1da; }
+
+    /* Game */
+    .game-frame-wrapper {
+      width: 100%; aspect-ratio: 16 / 9; background: #000;
+      border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+    }
+    .game-frame-wrapper iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .player-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 16px; }
+    .player-bar span { color: var(--muted); font-size: 15px; }
+
+    /* Info cards */
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 28px; margin-top: 24px; }
+    .card h2 { margin: 0 0 10px; font-size: 22px; letter-spacing: -0.02em; }
+    .card p { margin: 0; color: var(--muted); font-size: 17px; line-height: 1.6; max-width: 70ch; }
+    .control-row { display: flex; align-items: center; gap: 12px; margin-top: 12px; color: var(--muted); font-size: 16px; }
+    .key {
+      background: var(--teal-tint); color: var(--teal); font-weight: 700;
+      min-width: 38px; text-align: center; padding: 6px 10px; border-radius: 10px;
+    }
+
+    .sidebar { padding-top: 4px; }
+
+    /* Footer */
+    .site-footer { background: var(--surface); border-top: 1px solid var(--line); }
+    .site-footer .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 130px; flex-wrap: wrap; color: var(--muted); }
+    .foot-right { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .foot-right a:hover { color: var(--ink); }
+
+    @media (max-width: 900px) {
+      .game-page { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+    }
+    @media (max-width: 720px) {
+      .nav { gap: 20px; font-size: 16px; }
+      .brand { font-size: 24px; }
+      .site-header .wrap { height: 72px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../../index.html"><span class="brand-mark">L</span> LogicDen</a>
+      <nav class="nav" aria-label="Main">
+        <a href="../../index.html#calculator">Calculator</a>
+        <a href="../../index.html#tools">Tools</a>
+        <a href="../../index.html#games" aria-current="page">Games</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Top banner ad -->
+  <div class="ad-top">
+    <div class="ad-box" style="width:728px;max-width:100%;height:90px;">
+      <script>
+        atOptions = {
+          'key' : '5035358a8bd65375379bbb9f7227994d',
+          'format' : 'iframe',
+          'height' : 90,
+          'width' : 728,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highperformanceformat.com/5035358a8bd65375379bbb9f7227994d/invoke.js"></script>
+    </div>
+  </div>
+
+  <main>
+    <div class="wrap game-page">
+      <div>
+        <div class="top-row">
+          <div>
+            <a class="back" href="../../index.html#games">&larr; Back to games</a>
+            <h1>CHANGE THIS TO GAME NAME</h1>
+            <p class="sub">CHANGE THIS TO CATEGORY (EXAMPLE: SPORTS) &middot; Runs right in your browser.</p>
+          </div>
+          <a class="btn btn-dark" href="../../index.html#games">All Games</a>
+        </div>
+
+        <div class="game-frame-wrapper">
+          <iframe id="gameFrame"
+            src="CHANGE THIS TO GAME PATH (EXAMPLE: /g/soccer-random/)"
+            allowfullscreen
+            title="CHANGE THIS TO GAME NAME"
+            sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-orientation-lock">
+          </iframe>
+        </div>
+
+        <div class="player-bar">
+          <span>Click inside the game first so the keyboard works.</span>
+          <button class="btn btn-light" onclick="goFullscreen()">Fullscreen</button>
+        </div>
+
+        <!-- Mid ad -->
+        <div class="ad-box ad-mid">
+          <script>
+            atOptions = {
+              'key' : '7ebcb4192165b35f1dd46c154cffc595',
+              'format' : 'iframe',
+              'height' : 250,
+              'width' : 300,
+              'params' : {}
+            };
+          </script>
+          <script src="https://www.highperformanceformat.com/7ebcb4192165b35f1dd46c154cffc595/invoke.js"></script>
+        </div>
+
+        <div class="card">
+          <h2>About this game</h2>
+          <p>CHANGE THIS TO GAME DESCRIPTION</p>
+        </div>
+
+        <div class="card">
+          <h2>Controls</h2>
+          <div class="control-row"><span class="key">CHANGE THIS TO KEY 1</span> CHANGE THIS TO WHAT KEY 1 DOES</div>
+          <div class="control-row"><span class="key">CHANGE THIS TO KEY 2</span> CHANGE THIS TO WHAT KEY 2 DOES</div>
+          <!-- Need more controls? Copy one of the lines above. Need fewer? Delete one. -->
+        </div>
+      </div>
+
+      <!-- Sidebar ad -->
+      <aside class="sidebar">
+        <div class="ad-box" style="width:160px;height:600px;">
+          <script>
+            atOptions = {
+              'key' : 'feb800c53eb22be3eb56b84f3d25d762',
+              'format' : 'iframe',
+              'height' : 600,
+              'width' : 160,
+              'params' : {}
+            };
+          </script>
+          <script src="https://www.highperformanceformat.com/feb800c53eb22be3eb56b84f3d25d762/invoke.js"></script>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>&copy; 2026 LogicDen</span>
+      <div class="foot-right">
+        <a href="/GeckoGames/privacy-policy/">Privacy Policy</a>
+        <a href="/contact/">Contact</a>
+        <button class="btn btn-light" id="disguise">Disguise tab</button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function goFullscreen() {
+      const frame = document.getElementById('gameFrame');
+      if (frame.requestFullscreen) frame.requestFullscreen();
+      else if (frame.webkitRequestFullscreen) frame.webkitRequestFullscreen();
+    }
+
+    /* Disguise tab: swaps the tab title and icon. Click again to restore. */
+    const realTitle = document.title;
+    let icon = document.querySelector("link[rel~='icon']");
+    if (!icon) {
+      icon = document.createElement("link");
+      icon.rel = "icon";
+      document.head.appendChild(icon);
+    }
+    const realIcon = icon.href;
+    const fakeIcon = "data:image/svg+xml," + encodeURIComponent(
+      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='#4285f4'/><rect x='8' y='7' width='16' height='18' rx='2' fill='white'/></svg>"
+    );
+    let disguised = false;
+    document.getElementById("disguise").addEventListener("click", function () {
+      disguised = !disguised;
+      document.title = disguised ? "Untitled document - Google Docs" : realTitle;
+      icon.href = disguised ? fakeIcon : realIcon;
+    });
+
+    /* Quick hide: press ` (backtick) to jump back to the home page. */
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "`") window.location.replace("../../index.html");
+    });
+  </script>
+</body>
+</html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DG1T71NNRN"></script>
